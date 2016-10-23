@@ -1,0 +1,52 @@
+#!/bin/bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+DL="https://nodejs.org/en/download/current/"
+
+cd "$DIR"
+
+if [ -e "dist" ]; then
+	echo "dist directory exists - exiting"
+	exit 1
+fi
+
+if [ -e "dist.tgz" ]; then
+	echo "dist.tgz exists - exiting"
+	exit 1
+fi
+
+URL="$( /usr/bin/curl -s "$DL" | /usr/bin/grep darwin | /usr/bin/sed 's/.*"\(.*\)".*/\1/' )"
+
+FILE="$( echo "$URL" | /usr/bin/sed 's,.*/,,' )"
+
+/bin/mkdir dist
+cd dist
+
+echo ""
+echo "Downloading $URL"
+/usr/bin/curl -O "$URL"
+
+echo ""
+echo "Extracting..."
+/usr/bin/tar xvzf "$FILE"
+/bin/rm -f "$FILE"
+
+/bin/ln -s * node
+
+echo ""
+echo "Adding homebridge scripts..."
+cd ..
+/usr/bin/tar cf - homebridge | (cd dist; /usr/bin/tar xvf -)
+
+echo ""
+echo "Installing homebridge..."
+cd dist
+./homebridge/installhomebridge
+
+echo ""
+echo "Creating distribution..."
+/usr/bin/tar cvzf ../dist.tgz .
+
+echo ""
+echo "Done."
