@@ -5,7 +5,14 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export PATH="$DIR:/usr/bin:/bin:/usr/sbin:/sbin"
 export NODE_PATH="$( "$DIR/npm" -g root )"
 
-CDIR="$DIR/$1"
+NAME="$1"
+
+if [[ "$NAME" == /* ]]; then
+	CDIR="$NAME"
+else
+	CDIR="$DIR/$NAME"
+fi
+
 LOG="$CDIR/homebridge.log"
 
 if [ -f "$LOG.6" ]; then /bin/mv -f "$LOG.6" "$LOG.7"; fi

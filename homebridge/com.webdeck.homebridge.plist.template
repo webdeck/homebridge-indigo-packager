@@ -5,9 +5,9 @@
 	<key>KeepAlive</key>
 	<true/>
 	<key>Label</key>
-	<string>com.webdeck.homebridge.@NAME@</string>
+	<string>com.webdeck.homebridge.@SHORTNAME@</string>
 	<key>WorkingDirectory</key>
-	<string>@DIR@/@NAME@</string>
+	<string>@CDIR@</string>
 	<key>ProgramArguments</key>
 	<array>
 		<string>@DIR@/runhomebridge</string>
