@@ -29,7 +29,7 @@ Scripts:
 * load: Tells launchctl to start the instance of homebridge-indigo in the specified subdirectory.
 * unload: Tells launchctl to stop the instance of homebridge-indigo in the specified subdirectory.
 * runhomebridge: Runs an instance of homebridge-indigo in the specified subdirectory, logging to homebridge.log in that subdirectory.  Intended to be invoked by launchd.
-* installhomebridge: Installs homebridge and homebridge-indigo globally in the embedded nodejs instance.  Only used for the initial installation by makedist.
-* updatehomebridge: Updates the installation of homebridge and homebridge-indigo globally in the embedded nodejs instance.
+* installhomebridge: Installs homebridge and homebridge-indigo globally in the embedded nodejs instance.  Only used for the initial installation by makedist.  Requires that the XCode Command Line Tools are installed.
+* updatehomebridge: Updates the installation of homebridge and homebridge-indigo globally in the embedded nodejs instance.  Requires that the XCode Command Line Tools are installed.
 
 The subdirectory structure supported by the scripts is intended to provide a structured means to work around the HomeKit limit of 100 accessories per bridge.
