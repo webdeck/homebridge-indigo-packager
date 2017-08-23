@@ -12,6 +12,8 @@ else
 	CDIR="$DIR/$NAME"
 fi
 
-PLIST="$CDIR/com.webdeck.homebridge.$NAME.plist"
+SHORTNAME="$( /usr/bin/basename "$NAME" )"
+
+PLIST="$CDIR/com.webdeck.homebridge.$SHORTNAME.plist"
 
 exec /bin/launchctl unload "$PLIST"
