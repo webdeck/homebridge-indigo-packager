@@ -4,6 +4,8 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 DL="https://nodejs.org/en/download/"
 
+FFMPEG_URL="https://ffmpeg.zeranoe.com/builds/macos64/static/ffmpeg-20180314-f706cdd-macos64-static.zip"
+
 cd "$DIR"
 
 if [ -e "dist" ]; then
@@ -18,8 +20,6 @@ fi
 
 URL="$( /usr/bin/curl -s "$DL" | /usr/bin/grep darwin | /usr/bin/sed 's/.*"\(.*\)".*/\1/' )"
 
-FILE="$( echo "$URL" | /usr/bin/sed 's,.*/,,' )"
-
 /bin/mkdir dist
 cd dist
 
@@ -29,6 +29,7 @@ echo "Downloading $URL"
 
 echo ""
 echo "Extracting..."
+FILE="$( echo "$URL" | /usr/bin/sed 's,.*/,,' )"
 /usr/bin/tar xvzf "$FILE"
 /bin/rm -f "$FILE"
 
@@ -45,8 +46,22 @@ cd dist
 ./homebridge/installhomebridge
 
 echo ""
+echo "Downloading $FFMPEG_URL"
+/usr/bin/curl -O "$FFMPEG_URL"
+
+echo ""
+echo "Extracting..."
+FFMPEG_FILE="$( echo "$FFMPEG_URL" | /usr/bin/sed 's,.*/,,' )"
+FFMPEG_DIR="$( echo "$FFMPEG_FILE" | /usr/bin/sed 's,.zip$,,' )"
+/bin/rm -fr "$FFMPEG_DIR"
+/usr/bin/unzip "$FFMPEG_FILE"
+/bin/rm -f "$FFMPEG_FILE"
+/bin/rm -f ffmpeg
+/bin/ln -s "$FFMPEG_DIR" ffmpeg
+
+echo ""
 echo "Creating distribution..."
-/usr/bin/tar cvzf ../dist.tgz .
+/usr/bin/tar czf ../dist.tgz .
 
 echo ""
 echo "Done."

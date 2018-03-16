@@ -7,3 +7,4 @@ export NODE_PATH="$( "$DIR/npm" -g root )"
 
 "$DIR/npm" install -g homebridge
 "$DIR/npm" install -g "https://github.com/webdeck/homebridge-indigo2.git"
+"$DIR/npm" install -g homebridge-camera-ffmpeg
