@@ -2,9 +2,8 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-DL="https://nodejs.org/en/download/"
-
-FFMPEG_URL="https://ffmpeg.zeranoe.com/builds/macos64/static/ffmpeg-20180314-f706cdd-macos64-static.zip"
+NODE_DL="https://nodejs.org/en/download/"
+FFMPEG_DL="https://ffmpeg.zeranoe.com/builds/"
 
 cd "$DIR"
 
@@ -18,19 +17,19 @@ if [ -e "dist.tgz" ]; then
 	exit 1
 fi
 
-URL="$( /usr/bin/curl -s "$DL" | /usr/bin/grep darwin | /usr/bin/sed 's/.*"\(.*\)".*/\1/' )"
+NODE_URL="$( /usr/bin/curl -s "$NODE_DL" | /usr/bin/grep darwin | /usr/bin/sed 's/.*"\(.*\)".*/\1/' )"
 
 /bin/mkdir dist
 cd dist
 
 echo ""
-echo "Downloading $URL"
-/usr/bin/curl -O "$URL"
+echo "Downloading NodeJS from $NODE_URL..."
+/usr/bin/curl -O "$NODE_URL"
 
 echo ""
-echo "Extracting..."
-FILE="$( echo "$URL" | /usr/bin/sed 's,.*/,,' )"
-/usr/bin/tar xvzf "$FILE"
+echo "Extracting NodeJS..."
+FILE="$( echo "$NODE_URL" | /usr/bin/sed 's,.*/,,' )"
+/usr/bin/tar xzf "$FILE"
 /bin/rm -f "$FILE"
 
 /bin/ln -s * node
@@ -41,16 +40,19 @@ cd ..
 /usr/bin/tar cf - homebridge | (cd dist; /usr/bin/tar xvf -)
 
 echo ""
-echo "Installing homebridge..."
+echo "Installing homebridge NodeJS modules..."
 cd dist
 ./homebridge/installhomebridge
 
+FFMPEG_VERSION="$( /usr/bin/curl -s "$FFMPEG_DL" | /usr/bin/grep radio | /usr/bin/head -1 | /usr/bin/sed 's/.*value="\([^"]*\)".*/\1/' )"
+FFMPEG_URL="https://ffmpeg.zeranoe.com/builds/macos64/static/ffmpeg-$FFMPEG_VERSION-macos64-static.zip"
+
 echo ""
-echo "Downloading $FFMPEG_URL"
+echo "Downloading FFmpeg from $FFMPEG_URL"
 /usr/bin/curl -O "$FFMPEG_URL"
 
 echo ""
-echo "Extracting..."
+echo "Extracting FFmpeg..."
 FFMPEG_FILE="$( echo "$FFMPEG_URL" | /usr/bin/sed 's,.*/,,' )"
 FFMPEG_DIR="$( echo "$FFMPEG_FILE" | /usr/bin/sed 's,.zip$,,' )"
 /bin/rm -fr "$FFMPEG_DIR"
