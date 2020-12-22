@@ -3,7 +3,6 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 NODE_DL="https://nodejs.org/en/download/"
-FFMPEG_DL="https://ffmpeg.zeranoe.com/builds/"
 
 cd "$DIR"
 
@@ -17,14 +16,14 @@ if [ -e "dist.tgz" ]; then
 	exit 1
 fi
 
-NODE_URL="$( /usr/bin/curl -s "$NODE_DL" | /usr/bin/grep darwin | /usr/bin/sed 's/.*"\(.*\)".*/\1/' )"
+NODE_URL="$( /usr/bin/curl -L -s "$NODE_DL" | /usr/bin/grep darwin | /usr/bin/sed 's/.*"\(.*\)".*/\1/' )"
 
 /bin/mkdir dist
 cd dist
 
 echo ""
 echo "Downloading NodeJS from $NODE_URL..."
-/usr/bin/curl -O "$NODE_URL"
+/usr/bin/curl -L -O "$NODE_URL"
 
 echo ""
 echo "Extracting NodeJS..."
@@ -44,12 +43,11 @@ echo "Installing homebridge NodeJS modules..."
 cd dist
 ./homebridge/installhomebridge
 
-FFMPEG_VERSION="$( /usr/bin/curl -s "$FFMPEG_DL" | /usr/bin/grep radio | /usr/bin/head -1 | /usr/bin/sed 's/.*value="\([^"]*\)".*/\1/' )"
-FFMPEG_URL="https://ffmpeg.zeranoe.com/builds/macos64/static/ffmpeg-$FFMPEG_VERSION-macos64-static.zip"
+FFMPEG_URL="https://archive.org/download/zeranoe/macos64/static/ffmpeg-latest-macos64-static.zip"
 
 echo ""
 echo "Downloading FFmpeg from $FFMPEG_URL"
-/usr/bin/curl -O "$FFMPEG_URL"
+/usr/bin/curl -L -O "$FFMPEG_URL"
 
 echo ""
 echo "Extracting FFmpeg..."
