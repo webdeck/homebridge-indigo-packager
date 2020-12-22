@@ -60,6 +60,10 @@ FFMPEG_DIR="$( echo "$FFMPEG_FILE" | /usr/bin/sed 's,.zip$,,' )"
 /bin/ln -s "$FFMPEG_DIR" ffmpeg
 
 echo ""
+echo "Clearing quarantine flags..."
+/usr/bin/xattr -r -d com.apple.quarantine .
+
+echo ""
 echo "Creating distribution..."
 /usr/bin/tar czf ../dist.tgz .
 
