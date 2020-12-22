@@ -27,4 +27,4 @@ if [ -f "$CDIR/homebridge.debug" ]; then
 	. "$CDIR/homebridge.debug"
 fi
 
-exec "$DIR/homebridge" -D -U "$CDIR" -P "$CDIR" > "$LOG" 2>&1
+exec "$DIR/homebridge" -D -Q -U "$CDIR" -P "$CDIR" > "$LOG" 2>&1
