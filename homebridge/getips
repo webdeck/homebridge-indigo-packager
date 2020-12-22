@@ -1,0 +1,10 @@
+#!/bin/bash
+
+/sbin/ifconfig | \
+	/usr/bin/grep "inet " | \
+	/usr/bin/grep -Fv 127.0.0.1 | \
+	/usr/bin/grep -Fv 169.254. | \
+	/usr/bin/awk '{print $2}' | \
+	/usr/bin/sort
+
+exit 0
