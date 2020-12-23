@@ -6,7 +6,7 @@ export PATH="$DIR:/usr/bin:/bin:/usr/sbin:/sbin"
 export NODE_PATH="$( "$DIR/npm" -g root )"
 
 "$DIR/npm" install -g npm
-"$DIR/npm" install -g --unsafe-perm homebridge
+"$DIR/npm" install -g --unsafe-perm homebridge@beta
 "$DIR/npm" install -g --unsafe-perm homebridge-config-ui-x
 "$DIR/npm" install -g --unsafe-perm homebridge-indigo2
 "$DIR/npm" install -g --unsafe-perm homebridge-camera-ffmpeg
